@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Expense Summary
+{% endblock %}
+
+{% block main %}
+    <h1>Expense Summary</h1>
+    <p>Welcome, {{ current_user.username }}! Here is your expense summary.</p>
+
+    <h2>Your Expenses</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.amount }}</td>
+                <td>{{ expense.category }}</td>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.date }}</td>
+                <td>
+                    <a href="{{ url_for('edit_expense', expense_id=expense.id) }}" class="btn btn-primary btn-sm">Edit</a>
+                    <form action="{{ url_for('delete_expense', expense_id=expense.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('add_expense') }}" class="btn btn-success">Add New Expense</a>
+{% endblock %}

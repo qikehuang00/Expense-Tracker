@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Add Expense
+{% endblock %}
+
+{% block main %}
+    <h2>Add Expense</h2>
+    <form action="/add_expense" method="post">
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="amount" placeholder="Amount" type="number" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="category" placeholder="Category" type="text" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="description" placeholder="Description" type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Add Expense</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <h2>Log In</h2>
+    <form action="/login" method="post">
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="username" placeholder="Username" type="text" required>
+        </div>
+        <div class="mb-3">
+            <input class="form-control mx-auto w-auto" name="password" placeholder="Password" type="password" required>
+        </div>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExazcxNWR2NmozbmY4Z25maG40cG56Zng3aDZydHk3ODNndnZuMDRiMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ND6xkVPaj8tHO/giphy.gif" alt="Money GIF" width="250">
+                🤑{{ error }}
+            </div>
+        {% endif %}
+        <button class="btn btn-primary" type="submit">Log In</button>
+    </form>
+{% endblock %}
