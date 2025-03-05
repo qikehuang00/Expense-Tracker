@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func, extract
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -46,8 +47,26 @@ def load_user(user_id):
 @app.route('/')
 @login_required
 def index():
+    # 获取当前用户的所有支出记录
     expenses = Expense.query.filter_by(user_id=current_user.id).all()
-    return render_template('index.html', expenses=expenses)
+
+    # 按月划分的总消费金额
+    monthly_expenses = db.session.query(
+        extract('year', Expense.date).label('year'),
+        extract('month', Expense.date).label('month'),
+        func.sum(Expense.amount).label('total_amount')
+    ).filter_by(user_id=current_user.id).group_by(
+        extract('year', Expense.date),
+        extract('month', Expense.date)
+    ).all()
+
+    # 按类别划分的总消费金额
+    category_expenses = db.session.query(
+        Expense.category,
+        func.sum(Expense.amount).label('total_amount')
+    ).filter_by(user_id=current_user.id).group_by(Expense.category).all()
+
+    return render_template('index.html', expenses=expenses, monthly_expenses=monthly_expenses, category_expenses=category_expenses)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

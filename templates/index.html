@@ -8,6 +8,47 @@
     <h1>Expense Summary</h1>
     <p>Welcome, {{ current_user.username }}! Here is your expense summary.</p>
 
+    <!-- 按月划分的总消费金额 -->
+    <h2>Monthly Expenses</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in monthly_expenses %}
+            <tr>
+                <td>{{ expense.year }}</td>
+                <td>{{ expense.month }}</td>
+                <td>{{ expense.total_amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- 按类别划分的总消费金额 -->
+    <h2>Expenses by Category</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Total Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in category_expenses %}
+            <tr>
+                <td>{{ expense.category }}</td>
+                <td>{{ expense.total_amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- 支出记录表格 -->
     <h2>Your Expenses</h2>
     <table class="table">
         <thead>
